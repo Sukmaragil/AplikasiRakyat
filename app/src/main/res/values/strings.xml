@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Go Citizen</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="belum_menikah">Belum Menikah</string>
+    <string name="penghasilan_tidak_tetap">Penghasilan Tidak Tetap</string>
+    <string name="action_settings">Settings</string>
+    <string name="belum_memiliki_rumah">Belum Memiliki Rumah</string>
+    <string name="tidak_keberatan_tetangga">Tidak Keberatan Tetangga</string>
+    <string name="izin_berpergian">Izin Berpergian</string>
+    <string name="hint_nik">Nomor Induk Kependudukan</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_kk">Kartu Keluarga</string>
+    <string name="hint_kegiatan_tetangga">Kegiatan</string>
+    <string name="hint_ktp">Kartu Tanda Penduduk</string>
+    <string name="hint_keperluan_belum_menikah">Keperluan</string>
+    <string name="hint_maksud_berpergian">Maksud Berpergian</string>
+    <string name="hint_kendaraan_yang_digunakan">Kendaraan yang Digunakan</string>
+    <string name="hint_barang_yang_dibawa">Barang yang Dibawa</string>
+    <string name="hint_yang_turut_berpergian">Siapa yang Turut Berpergian</string>
+    <string name="hint_lama_berpergian">Lama Berpergian</string>
+    <string name="hint_tujuan_berpergian">Tujuan</string>
+    <string name="hint_keperluan_belum_memiliki_rumah">Keperluan</string>
+    <string name="err_nik">Harap Isi Nik Anda</string>
+    <string name="err_email">Harap Isi Email Anda</string>
+    <string name="err_kegiatan_tetangga">Harap isi Kegiatan Anda</string>
+    <string name="err_keperluan_belum_menikah">Harap isi Keperluan Anda</string>
+    <string name="err_maksud_berpergian">Harap isi Keperluan Anda</string>
+    <string name="err_tujuan_berpergian">Harap isi Tujuan Anda</string>
+    <string name="err_lama_berpergian">Harap isi Lama Anda Berpergian</string>
+    <string name="err_anggota_berpergian">Harap isi Anggota Berpergian</string>
+    <string name="err_barang_berpergian">Harap isi Barang Bawaan Anda</string>
+    <string name="err_kendaraan_berpergian">Harap isi Jenis Kendaraan yang Digunakan</string>
+    <string name="lacak">Lacak Permohonan</string>
+
+
+</resources>
