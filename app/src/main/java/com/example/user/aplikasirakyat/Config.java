@@ -1,7 +1,5 @@
 package com.example.user.aplikasirakyat;
 
-import android.widget.TextView;
-
 /**
  * Created by USER on 17/04/2016.
  */

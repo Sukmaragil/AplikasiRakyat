@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.user.aplikasirakyat">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-sdk android:minSdkVersion="9" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.user.aplikasirakyat.MainActivity"
+            android:label="@string/title_activity_welcome"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PermohonanBelumMenikah"
+            android:label="@string/belum_menikah"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".WelcomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -20,82 +35,86 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PermohonanBelumMenikah"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/belum_menikah">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
-        <activity android:name=".PermohonanPenghasilanTidakTetap"
+
+        <activity
+            android:name=".PermohonanPenghasilanTidakTetap"
             android:label="@string/penghasilan_tidak_tetap"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".PermohonanBelumMemilikiRumah"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/belum_memiliki_rumah">
+        <activity
+            android:name=".PermohonanBelumMemilikiRumah"
+            android:label="@string/belum_memiliki_rumah"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".PermohonanTidakKeberatanTetangga"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/tidak_keberatan_tetangga">
+        <activity
+            android:name=".PermohonanTidakKeberatanTetangga"
+            android:label="@string/tidak_keberatan_tetangga"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".PermohonanIzinBerpergian"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/izin_berpergian">
+        <activity
+            android:name=".PermohonanIzinBerpergian"
+            android:label="@string/izin_berpergian"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".InformasiBelumMenikah"
-            android:parentActivityName=".MainActivity"
-            android:label="Informasi Pelayanan">
+        <activity
+            android:name=".InformasiBelumMenikah"
+            android:label="Informasi Pelayanan"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".InformasiTidakKeberatanTetangga"
-            android:parentActivityName=".MainActivity"
-            android:label="Informasi Pelayanan">
+        <activity
+            android:name=".InformasiTidakKeberatanTetangga"
+            android:label="Informasi Pelayanan"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".InformasiBelumMemilikiRumah"
-            android:parentActivityName=".MainActivity"
-            android:label="Informasi Pelayanan">
+        <activity
+            android:name=".InformasiBelumMemilikiRumah"
+            android:label="Informasi Pelayanan"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".InformasiIzinBerpergian"
-            android:parentActivityName=".MainActivity"
-            android:label="Informasi Pelayanan">
+        <activity
+            android:name=".InformasiIzinBerpergian"
+            android:label="Informasi Pelayanan"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".InformasiPenghasilanTidakTetap"
-            android:parentActivityName=".MainActivity"
-            android:label="Informasi Pelayanan">
+        <activity
+            android:name=".InformasiPenghasilanTidakTetap"
+            android:label="Informasi Pelayanan"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".LacakPermohonan"
-            android:parentActivityName=".MainActivity"
-            android:label="Lacak Permohonan">
+        <activity
+            android:name=".LacakPermohonan"
+            android:label="Lacak Permohonan"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
     </application>
 

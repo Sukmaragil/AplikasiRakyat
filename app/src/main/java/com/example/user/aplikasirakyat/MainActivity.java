@@ -2,20 +2,14 @@ package com.example.user.aplikasirakyat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.text.Html;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,7 +36,7 @@ public class MainActivity extends AppCompatActivity
 
                         "</html>";
         webview.loadData(summary, "text/html", "UTF-8");
-     //   webview.loadUrl("http:www.google.com/");
+     // webview.loadUrl("http:www.google.com/");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,7 +72,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.penghasilan_tidak_tetap) {
             Intent intent = new Intent(MainActivity.this,PermohonanPenghasilanTidakTetap.class);
             startActivity(intent);
-
 
         } else if (id == R.id.belum_memiliki_rumah) {
             Intent intent = new Intent(MainActivity.this,PermohonanBelumMemilikiRumah.class);
@@ -122,7 +115,6 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this,LacakPermohonan.class);
             startActivity(intent);
         }
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

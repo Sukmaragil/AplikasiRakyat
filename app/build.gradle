@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.example.user.aplikasirakyat"
@@ -21,12 +21,13 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.+'
-    compile 'com.mcxiaoke.volley:library:1.0.19'
     compile files('libs/PhotoUtil.jar')
+    compile files('libs/GenAsync.1.2.jar')
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'net.gotev:uploadservice:3.0'
     compile 'com.android.support:support-v4:23.1.1'
-    compile files('libs/GenAsync.1.2.jar')
+    compile 'com.android.support.constraint:constraint-layout:+'
+    testCompile 'junit:junit:4.12'
 }
