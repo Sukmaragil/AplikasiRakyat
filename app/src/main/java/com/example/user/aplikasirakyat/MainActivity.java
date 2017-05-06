@@ -23,19 +23,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String summary = "<html>" +
-                                "<head><center><h3><bold>Selamat Datang di Go Citizen</bold></h3></center></head>" +
-                "<p>Aplikasi ini dirancang sebagai alternatif dalam pengajuan permohonan pelayanan publik secara online</p>" +
-                "<p>Pelayanan publik yang dapat diajukan, menurut Peraturan Walikota Bogor Nomor 29 Tahun 2013 dan Peraturan Walikota Bogor Nomor 45 Tahun 2013 antara lain: </p>" +
-                "<ol>" +
-                "<li>Surat Keterangan Belum Pernah Menikah</li>" +
-                "<li>Surat Keterangan Penghasilan Tidak Tetap</li>" +
-                "<li>Surat Keterangan Belum Memiliki Rumah</li>" +
-                "<li>Surat Keterangan Tidak Keberatan Tetangga</li>" +
-                "<li>Surat Keterangan Izin Berpergian</li>"+
 
-                        "</html>";
-        webview.loadData(summary, "text/html", "UTF-8");
+     // webview.loadData(summary, "text/html", "UTF-8");
      // webview.loadUrl("http:www.google.com/");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
