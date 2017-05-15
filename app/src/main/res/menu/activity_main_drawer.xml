@@ -35,19 +35,6 @@
     </group>
     </item>
 
-    <item android:title="Tracking">
-        <group android:checkableBehavior="single">
-            <menu>
-                <item
-                    android:id="@+id/lacak"
-                    android:icon="@drawable/ic_search_black_24dp"
-                    android:title="@string/lacak" />
-
-            </menu>
-
-        </group>
-    </item>
-
     <item android:title="Informasi pelayanan">
         <group android:checkableBehavior="single">
             <menu>

@@ -1,4 +1,4 @@
-package com.example.user.aplikasirakyat;
+package com.example.user.aplikasirakyat.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-
-import org.w3c.dom.Text;
+import com.example.user.aplikasirakyat.AppController;
+import com.example.user.aplikasirakyat.R;
+import com.example.user.aplikasirakyat.activity.ListAllPermohonanRT;
 
 import java.util.List;
 

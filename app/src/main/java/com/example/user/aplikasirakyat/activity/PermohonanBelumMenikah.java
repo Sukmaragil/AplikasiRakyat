@@ -1,4 +1,4 @@
-package com.example.user.aplikasirakyat;
+package com.example.user.aplikasirakyat.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -20,7 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,9 +27,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.kosalgeek.android.photoutil.GalleryPhoto;
-import com.kosalgeek.android.photoutil.ImageBase64;
-import com.kosalgeek.android.photoutil.ImageLoader;
+import com.example.user.aplikasirakyat.Config;
+import com.example.user.aplikasirakyat.R;
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.EachExceptionsHandler;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
@@ -38,7 +36,6 @@ import com.kosalgeek.genasync12.PostResponseAsyncTask;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -50,75 +47,57 @@ import java.util.Locale;
 import java.util.UUID;
 
 /**
- * Created by USER on 20/04/2016.
+ * Created by USER on 19/04/2016.
  */
-public class PermohonanIzinBerpergian extends AppCompatActivity implements View.OnClickListener {
+public class PermohonanBelumMenikah extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextNik;
     private EditText editTextEmail;
-    private EditText editTextMaksudBerpergian;
-    private EditText editTextTujuan;
-    private EditText editTextLamaBerpergian;
-    private EditText editTextYangTurutBerpergian;
-    private EditText editTextBarangYangDibawa;
-    private EditText editTextKendaraanYangDigunakan;
+    private EditText editTextKeperluanBelumMenikah;
 
-    final String TAG = this.getClass().getName();
     private ImageView ivImage, ivImage2;
-    private TextInputLayout input_layout_maksud_berpergian, input_layout_nik, input_layout_email;
-    private TextInputLayout input_layout_tujuan_berpergian, input_layout_lama_berpergian, input_layout_yang_turut_berpergian;
-    private TextInputLayout input_layout_barang_yang_dibawa,input_layout_kendaraan_yang_digunakan;
-    private GalleryPhoto galleryPhoto;
+    private TextInputLayout input_layout_nik, input_layout_email, input_layout_keperluan_belum_menikah;
+
+  //  private GalleryPhoto galleryPhoto;
+    private String nik, email, keperluan;
     private final int GALLERY_REQUEST = 123;
     private final int GALLERY_REQUEST2 = 321;
-
+    private Button buttonSubmit;
     private Button ivGallery, ivGallery2;
+
+    private static final int STORAGE_PERMISSION_CODE = 123;
+
     private Bitmap bitmap, bitmap2;
     private Uri filePath, filePath2;
-    private static final int STORAGE_PERMISSION_CODE = 234;
+
     private ProgressDialog loading;
-    private Button buttonSubmit;
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_permohonan_izin_berpergian);
+        setContentView(R.layout.activity_permohonan_belum_menikah);
 
-        editTextNik = (EditText) findViewById(R.id.editTextNik);
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextMaksudBerpergian = (EditText) findViewById(R.id.editTextMaksudBerpergian);
-        editTextTujuan = (EditText) findViewById(R.id.editTujuanBerpergian);
-        editTextLamaBerpergian = (EditText) findViewById(R.id.editTextLamaBerpergian);
-        editTextYangTurutBerpergian = (EditText) findViewById(R.id.editTextYangTurutBerpergian);
-        editTextBarangYangDibawa = (EditText) findViewById(R.id.editTextBarangYangDibawa);
-        editTextKendaraanYangDigunakan = (EditText) findViewById(R.id.editTextKendaraanYangDigunakan);
+        editTextNik = (EditText)findViewById(R.id.editTextNik);
+        editTextEmail = (EditText)findViewById(R.id.editTextEmail);
+        editTextKeperluanBelumMenikah = (EditText)findViewById(R.id.editTextKeperluanBelumMenikah);
+        ivGallery = (Button)findViewById(R.id.ivGallery);
+        ivGallery2 = (Button)findViewById(R.id.ivGallery2);
+        ivImage = (ImageView)findViewById(R.id.ivImage);
+        ivImage2 = (ImageView)findViewById(R.id.ivImage2);
+        input_layout_nik = (TextInputLayout)findViewById(R.id.input_layout_nik);
+        input_layout_email = (TextInputLayout)findViewById(R.id.input_layout_email);
+        input_layout_keperluan_belum_menikah = (TextInputLayout)findViewById(R.id.input_layout_keperluan_belum_menikah);
 
-        input_layout_nik = (TextInputLayout) findViewById(R.id.input_layout_nik);
-        input_layout_email = (TextInputLayout) findViewById(R.id.input_layout_email);
-        input_layout_maksud_berpergian = (TextInputLayout) findViewById(R.id.input_layout_maksud_berpergian);
-        input_layout_tujuan_berpergian = (TextInputLayout) findViewById(R.id.input_layout_tujuan_berpergian);
-        input_layout_lama_berpergian = (TextInputLayout) findViewById(R.id.input_layout_lama_berpergian);
-        input_layout_yang_turut_berpergian = (TextInputLayout) findViewById(R.id.input_layout_yang_turut_berpergian);
-        input_layout_barang_yang_dibawa = (TextInputLayout) findViewById(R.id.input_layout_barang_yang_dibawa);
-        input_layout_kendaraan_yang_digunakan = (TextInputLayout) findViewById(R.id.input_layout_kendaraan_yang_digunakan);
+        buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
 
         editTextNik.addTextChangedListener(new MyTextWatcher(editTextNik));
         editTextEmail.addTextChangedListener(new MyTextWatcher(editTextEmail));
-        editTextMaksudBerpergian.addTextChangedListener(new MyTextWatcher(editTextMaksudBerpergian));
-        editTextTujuan.addTextChangedListener(new MyTextWatcher(editTextTujuan));
-        editTextLamaBerpergian.addTextChangedListener(new MyTextWatcher(editTextLamaBerpergian));
-        editTextYangTurutBerpergian.addTextChangedListener(new MyTextWatcher(editTextYangTurutBerpergian));
-        editTextBarangYangDibawa.addTextChangedListener(new MyTextWatcher(editTextBarangYangDibawa));
-        editTextKendaraanYangDigunakan.addTextChangedListener(new MyTextWatcher(editTextKendaraanYangDigunakan));
+        editTextKeperluanBelumMenikah.addTextChangedListener(new MyTextWatcher(editTextKeperluanBelumMenikah));
 
-        ivGallery = (Button) findViewById(R.id.ivGallery);
-        ivGallery2 = (Button) findViewById(R.id.ivGallery2);
-        ivImage = (ImageView) findViewById(R.id.ivImage);
-        ivImage2 = (ImageView) findViewById(R.id.ivImage2);
 
-        buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -127,33 +106,31 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
         ivGallery.setOnClickListener(this);
         ivGallery2.setOnClickListener(this);
 
-        galleryPhoto = new GalleryPhoto(getApplicationContext());
-
     }
 
     public void cekNikdanPhoto(){
 
         String nik = editTextNik.getText().toString().trim();
 
-        HashMap<String, String> postData = new HashMap<>();
-        postData.put(Config.KEY_PERMOHONAN_NIK,nik);
+        HashMap<String, String> postData = new HashMap <String, String>();
+        postData.put(Config.KEY_PERMOHONAN_NIK,nik );
 
-        PostResponseAsyncTask task = new PostResponseAsyncTask(PermohonanIzinBerpergian.this, postData, new AsyncResponse() {
+        PostResponseAsyncTask task = new PostResponseAsyncTask(PermohonanBelumMenikah.this, postData, new AsyncResponse() {
 
             @Override
-            public void processFinish(String s) {
-                if(s.contains("Berhasil")){
-                    uploadMultiPart();
-                } else if(s.contains("NIK")) {
-                    new AlertDialog.Builder(PermohonanIzinBerpergian.this)
-                            .setTitle("Permohonan Gagal")
-                            .setMessage("Maaf, Nomor Induk Kependudukan (NIK) Anda belum terdaftar. Silahkan hubungi kantor kelurahan Anda")
-                            .setPositiveButton("Oke", null)
-                            .setIcon(R.drawable.ic_warning_black_24dp)
-                            .show();
-                }
+        public void processFinish(String s) {
+            if(s.contains("Berhasil")){
+                uploadMultiPart();
+            } else if(s.contains("NIK")) {
+                new AlertDialog.Builder(PermohonanBelumMenikah.this)
+                        .setTitle("Permohonan Gagal")
+                        .setMessage("Maaf, Nomor Induk Kependudukan (NIK) Anda belum terdaftar. Silahkan hubungi kantor kelurahan Anda")
+                        .setPositiveButton("Oke", null)
+                        .setIcon(R.drawable.ic_warning_black_24dp)
+                        .show();
             }
-        });
+        }
+    });
         task.execute(Config.URL_CEK_NIK);
         task.setEachExceptionsHandler(new EachExceptionsHandler() {
             @Override
@@ -182,48 +159,38 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
         });
     }
 
-    public void uploadMultiPart(){
 
-        Calendar calender = Calendar.getInstance();
+    public void uploadMultiPart() {
 
+        nik = editTextNik.getText().toString().trim();
+        email = editTextEmail.getText().toString().trim();
+        keperluan = editTextKeperluanBelumMenikah.getText().toString().trim();
         final String path = getPath(filePath);
         final String path2 = getPath(filePath2);
+        Calendar calender = Calendar.getInstance();
         final String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        final String pelayananId = "7";
-        final String nik = editTextNik.getText().toString().trim();
-        final String email = editTextEmail.getText().toString().trim();
-        final String maksudBerpergian = editTextMaksudBerpergian.getText().toString().trim();
-        final String tujuan = editTextTujuan.getText().toString().trim();
-        final String lama = editTextLamaBerpergian.getText().toString().trim();
-        final String turutBerpergian = editTextYangTurutBerpergian.getText().toString().trim();
-        final String barang = editTextBarangYangDibawa.getText().toString().trim();
-        final String kendaraan = editTextKendaraanYangDigunakan.getText().toString().trim();
-        final String tanggalPelayanan = sdf.format(calender.getTime());
+        final String pelayananId = "3";
 
+        final String tanggalPelayanan = sdf.format(calender.getTime());
 
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
 
                 try {
-                    //   ProgressDialog.show(PermohonanBelumMenikah.this, "Loading", "Mohon Menunggu", false, false);
+                 //   ProgressDialog.show(PermohonanBelumMenikah.this, "Loading", "Mohon Menunggu", false, false);
                     Thread.sleep(3000);
 
                     String uploadId = UUID.randomUUID().toString();
-                    new MultipartUploadRequest(PermohonanIzinBerpergian.this, uploadId, Config.URL_ADD_PERMOHONAN_BERPERGIAN)
+                    new MultipartUploadRequest(PermohonanBelumMenikah.this, uploadId, Config.URL_ADD_PERMOHONAN_BELUM_MENIKAH)
                             .addFileToUpload(path, "ktp")
                             .addFileToUpload(path2, "kk")
                             .addParameter(Config.KEY_PERMOHONAN_NIK, nik)
                             .addParameter(Config.KEY_PERMOHONAN_EMAIL, email)
                             .addParameter(Config.KEY_PELAYANAN_ID, pelayananId)
                             .addParameter(Config.KEY_TANGGAL_PELAYANAN, tanggalPelayanan)
-                            .addParameter(Config.KEY_MAKSUD_BERPERGIAN, maksudBerpergian)
-                            .addParameter(Config.KEY_TUJUAN_BERPERGIAN, tujuan)
-                            .addParameter(Config.KEY_LAMA_BERPERGIAN, lama)
-                            .addParameter(Config.KEY_ANGGOTA_BERPERGIAN, turutBerpergian)
-                            .addParameter(Config.KEY_BARANG_BAWAAN_BERPERGIAN, barang)
-                            .addParameter(Config.KEY_KENDARAAN_BERPERGIAN, kendaraan)
+                            .addParameter(Config.KEY_KEPERLUAN_BELUM_MENIKAH, keperluan)
                             .setNotificationConfig(new UploadNotificationConfig())
                             .setMaxRetries(2)
                             .startUpload();
@@ -231,30 +198,33 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 return null;
             }
+
             @Override
             protected void onPreExecute() {
 
-                loading = new ProgressDialog(PermohonanIzinBerpergian.this);
+                loading = new ProgressDialog(PermohonanBelumMenikah.this);
                 loading.setTitle("Loading");
                 loading.setMessage("Mohon Tunggu");
                 loading.setCancelable(false);
                 loading.setIndeterminate(false);
                 loading.show();
             }
+
             @Override
             protected void onPostExecute(Void result) {
                 if (loading != null) {
                     loading.dismiss();
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(PermohonanIzinBerpergian.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PermohonanBelumMenikah.this);
                     builder.setTitle("Permohonan Berhasil");
                     builder.setIcon(R.drawable.ic_check_black_24dp);
                     builder.setMessage("Selamat ! Pengajuan Anda berhasil dilakukan. Silahkan cek Email untuk melihat nomer resi pelayanan");
                     builder.setPositiveButton("Oke", null);
                     final AlertDialog alert = builder.create();
-                    PermohonanIzinBerpergian.this.runOnUiThread(new java.lang.Runnable() {
+                    PermohonanBelumMenikah.this.runOnUiThread(new java.lang.Runnable() {
                         public void run() {
                             //show AlertDialog
                             alert.show();
@@ -268,8 +238,8 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
         task.execute();
     }
 
-    public String getPath(Uri uri){
-        Cursor cursor = getContentResolver().query(uri, null, null, null,null);
+    public String getPath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
         String document_id = cursor.getString(0);
         document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
@@ -284,6 +254,20 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
 
         return path;
     }
+
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
 
     //This method will be called when the user will tap on allow or deny
     @Override
@@ -303,18 +287,6 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
         }
     }
 
-    private void requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-            return;
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            //If the user has denied the permission previously your code will come to this block
-            //Here you can explain why you need this permission
-            //Explain here why you need this permission
-        }
-        //And finally ask for the permission
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
-    }
 
     @Override
     public void onClick(View v){
@@ -342,9 +314,6 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
 
     }
 
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -370,7 +339,6 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
         }
     }
 
-
     private class MyTextWatcher implements TextWatcher {
 
         private View view;
@@ -393,23 +361,8 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
                 case R.id.editTextEmail:
                     validateEmail();
                     break;
-                case R.id.editTextMaksudBerpergian:
-                    validateMaksud();
-                    break;
-                case R.id.editTujuanBerpergian:
-                    validateTujuan();
-                    break;
-                case R.id.editTextLamaBerpergian:
-                    validateLama();
-                    break;
-                case R.id.editTextYangTurutBerpergian:
-                    validateAnggota();
-                    break;
-                case R.id.editTextBarangYangDibawa:
-                    validateBarang();
-                    break;
-                case R.id.input_layout_kendaraan_yang_digunakan:
-                    validateKendaraan();
+                case R.id.editTextKeperluanBelumMenikah:
+                    validateKeperluan();
                     break;
             }
         }
@@ -424,26 +377,7 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
             return;
         }
 
-        if (!validateMaksud()){
-            return;
-        }
-
-        if(!validateTujuan()){
-            return;
-        }
-
-        if (!validateAnggota()) {
-
-            return;
-        }
-        if(!validateBarang()){
-            return;
-        }
-
-        if(!validateKendaraan()){
-            return;
-        }
-        if(!validateLama()){
+        if (!validateKeperluan()){
             return;
         }
 
@@ -461,13 +395,13 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
         return true;
     }
 
-    private boolean validateMaksud() {
-        if (editTextMaksudBerpergian.getText().toString().trim().isEmpty()) {
-            input_layout_maksud_berpergian.setError(getString(R.string.err_maksud_berpergian));
-            requestFocus(editTextMaksudBerpergian);
+    private boolean validateKeperluan() {
+        if (editTextKeperluanBelumMenikah.getText().toString().trim().isEmpty()) {
+            input_layout_keperluan_belum_menikah.setError(getString(R.string.err_keperluan_belum_menikah));
+            requestFocus(editTextKeperluanBelumMenikah);
             return false;
         } else {
-            input_layout_maksud_berpergian.setErrorEnabled(false);
+            input_layout_keperluan_belum_menikah.setErrorEnabled(false);
         }
         return true;
     }
@@ -484,61 +418,6 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
         return true;
     }
 
-    private boolean validateTujuan() {
-        if (editTextTujuan.getText().toString().trim().isEmpty()) {
-            input_layout_tujuan_berpergian.setError(getString(R.string.err_tujuan_berpergian));
-            requestFocus(editTextTujuan);
-            return false;
-        } else {
-            input_layout_tujuan_berpergian.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validateLama() {
-        if (editTextLamaBerpergian.getText().toString().trim().isEmpty()) {
-            input_layout_lama_berpergian.setError(getString(R.string.err_lama_berpergian));
-            requestFocus(editTextLamaBerpergian);
-            return false;
-        } else {
-            input_layout_lama_berpergian.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validateAnggota() {
-        if (editTextYangTurutBerpergian.getText().toString().trim().isEmpty()) {
-            input_layout_yang_turut_berpergian.setError(getString(R.string.err_anggota_berpergian));
-            requestFocus(editTextYangTurutBerpergian);
-            return false;
-        } else {
-            input_layout_yang_turut_berpergian.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validateBarang() {
-        if (editTextBarangYangDibawa.getText().toString().trim().isEmpty()) {
-            input_layout_barang_yang_dibawa.setError(getString(R.string.err_barang_berpergian));
-            requestFocus(editTextBarangYangDibawa);
-            return false;
-        } else {
-            input_layout_barang_yang_dibawa.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validateKendaraan() {
-        if (editTextKendaraanYangDigunakan.getText().toString().trim().isEmpty()) {
-            input_layout_kendaraan_yang_digunakan.setError(getString(R.string.err_kendaraan_berpergian));
-            requestFocus(editTextKendaraanYangDigunakan);
-            return false;
-        } else {
-            input_layout_kendaraan_yang_digunakan.setErrorEnabled(false);
-        }
-        return true;
-    }
-
     private static boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
@@ -549,4 +428,3 @@ public class PermohonanIzinBerpergian extends AppCompatActivity implements View.
         }
     }
 }
-

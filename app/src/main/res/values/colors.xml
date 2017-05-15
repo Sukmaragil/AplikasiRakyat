@@ -44,4 +44,7 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
+    <!--for list view text color-->
+    <color name="year">#999999</color>
+    <color name="title">#222222</color>
 </resources>

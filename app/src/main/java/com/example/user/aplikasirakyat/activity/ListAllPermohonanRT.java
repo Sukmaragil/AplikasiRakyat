@@ -1,4 +1,4 @@
-package com.example.user.aplikasirakyat;
+package com.example.user.aplikasirakyat.activity;
 
 /**
  * Created by USER on 11/05/2016.

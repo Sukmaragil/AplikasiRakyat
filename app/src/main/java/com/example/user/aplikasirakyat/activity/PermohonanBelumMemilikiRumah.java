@@ -1,18 +1,14 @@
-package com.example.user.aplikasirakyat;
+package com.example.user.aplikasirakyat.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -24,9 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -34,16 +27,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.kosalgeek.android.photoutil.GalleryPhoto;
-import com.kosalgeek.android.photoutil.ImageBase64;
-import com.kosalgeek.android.photoutil.ImageLoader;
+import com.example.user.aplikasirakyat.Config;
+import com.example.user.aplikasirakyat.R;
 import com.kosalgeek.genasync12.AsyncResponse;
 import com.kosalgeek.genasync12.EachExceptionsHandler;
 import com.kosalgeek.genasync12.PostResponseAsyncTask;
@@ -51,78 +36,76 @@ import com.kosalgeek.genasync12.PostResponseAsyncTask;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.UUID;
 
 /**
  * Created by USER on 20/04/2016.
  */
-public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implements View.OnClickListener {
-    private EditText editTextNik;
-    private EditText editTextEmail, editTextKegiatan;
-    private Button buttonSubmit;
+public class PermohonanBelumMemilikiRumah extends AppCompatActivity implements View.OnClickListener {
+
+    private EditText editTextNik, editTextKeperluan;
+    private EditText editTextEmail;
     private Button ivGallery;
     private Button ivGallery2;
+    private Button buttonSubmit;
+
+    final String TAG = this.getClass().getName();
     private ImageView ivImage;
     private ImageView ivImage2;
-    private TextInputLayout input_layout_nik, input_layout_email, input_layout_kegiatan;
+    private TextInputLayout input_layout_nik, input_layout_email, input_layout_keperluan_belum_memiliki_rumah;
+
+    private final int GALLERY_REQUEST = 123;
+    private final int GALLERY_REQUEST2 = 312;
 
     private static final int STORAGE_PERMISSION_CODE = 123;
-    private String nik, email,  keperluan;
+    private String nik, email, keperluan;
 
     private Bitmap bitmap, bitmap2;
-    private ProgressDialog loading;
     private Uri filePath, filePath2;
-    private final int GALLERY_REQUEST = 123;
-    private final int GALLERY_REQUEST2 = 321;
 
-
-
+    private ProgressDialog loading;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_permohonan_tidak_keberatan_tetangga);
+        setContentView(R.layout.activity_permohonan_belum_memiliki_rumah);
 
         editTextNik = (EditText)findViewById(R.id.editTextNik);
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
-        editTextKegiatan = (EditText)findViewById(R.id.editTextKegiatan);
+        editTextKeperluan =  (EditText)findViewById(R.id.editTextKeperluan);
         buttonSubmit = (Button)findViewById(R.id.buttonSubmit);
         ivGallery = (Button)findViewById(R.id.ivGallery);
         ivGallery2 = (Button)findViewById(R.id.ivGallery2);
-        ivImage2 = (ImageView) findViewById(R.id.ivImage2);
+
         ivImage = (ImageView)findViewById(R.id.ivImage);
-
-
-        input_layout_nik = (TextInputLayout)findViewById(R.id.input_layout_nik);
-        input_layout_email = (TextInputLayout)findViewById(R.id.input_layout_email);
-        input_layout_kegiatan = (TextInputLayout)findViewById(R.id.input_layout_kegiatan);
+        ivImage2 = (ImageView)findViewById(R.id.ivImage2);
 
         editTextNik.addTextChangedListener(new MyTextWatcher(editTextNik));
         editTextEmail.addTextChangedListener(new MyTextWatcher(editTextEmail));
-        editTextKegiatan.addTextChangedListener(new MyTextWatcher(editTextKegiatan));
+        editTextKeperluan.addTextChangedListener(new MyTextWatcher(editTextKeperluan));
+        input_layout_nik = (TextInputLayout)findViewById(R.id.input_layout_nik);
+        input_layout_email = (TextInputLayout)findViewById(R.id.input_layout_email);
+        input_layout_keperluan_belum_memiliki_rumah = (TextInputLayout)findViewById(R.id.input_layout_keperluan_belum_memiliki_rumah);
+
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ivGallery2.setOnClickListener(this);
-        ivGallery.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
+        ivGallery.setOnClickListener(this);
+        ivGallery2.setOnClickListener(this);
+
 
     }
 
@@ -133,13 +116,13 @@ public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implemen
         HashMap<String, String> postData = new HashMap<>();
         postData.put(Config.KEY_PERMOHONAN_NIK, nik);
 
-        PostResponseAsyncTask task = new PostResponseAsyncTask(PermohonanTidakKeberatanTetangga.this, postData, new AsyncResponse() {
+        PostResponseAsyncTask task = new PostResponseAsyncTask(PermohonanBelumMemilikiRumah.this, postData, new AsyncResponse() {
             @Override
             public void processFinish(String s) {
                 if(s.contains("Berhasil")){
                     uploadMultiPart();
                 } else if(s.contains("NIK")) {
-                    new AlertDialog.Builder(PermohonanTidakKeberatanTetangga.this)
+                    new AlertDialog.Builder(PermohonanBelumMemilikiRumah.this)
                             .setTitle("Permohonan Gagal")
                             .setMessage("Maaf, Nomor Induk Kependudukan (NIK) Anda belum terdaftar. Silahkan hubungi kantor kelurahan Anda")
                             .setPositiveButton("Oke", null)
@@ -177,15 +160,16 @@ public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implemen
     }
 
     public void uploadMultiPart(){
+
         nik = editTextNik.getText().toString().trim();
         email = editTextEmail.getText().toString().trim();
-        keperluan = editTextKegiatan.getText().toString().trim();
+        keperluan = editTextKeperluan.getText().toString().trim();
         final String path = getPath(filePath);
         final String path2 = getPath(filePath2);
         Calendar calender = Calendar.getInstance();
         final String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        final String pelayananId = "6";
+        final String pelayananId = "5";
 
         final String tanggalPelayanan = sdf.format(calender.getTime());
 
@@ -197,7 +181,7 @@ public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implemen
                     Thread.sleep(3000);
 
                     String uploadId = UUID.randomUUID().toString();
-                    new MultipartUploadRequest(PermohonanTidakKeberatanTetangga.this, uploadId, Config.URL_ADD_PERMOHONAN_TIDAK_KEBERATAN_TETANGGA)
+                    new MultipartUploadRequest(PermohonanBelumMemilikiRumah.this, uploadId, Config.URL_ADD_PERMOHONAN_BELUM_MEMILIKI_RUMAH)
                             .addFileToUpload(path, "ktp")
                             .addFileToUpload(path2, "kk")
                             .addParameter(Config.KEY_PERMOHONAN_NIK, nik)
@@ -219,7 +203,7 @@ public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implemen
             @Override
             protected void onPreExecute() {
 
-                loading = new ProgressDialog(PermohonanTidakKeberatanTetangga.this);
+                loading = new ProgressDialog(PermohonanBelumMemilikiRumah.this);
                 loading.setTitle("Loading");
                 loading.setMessage("Mohon Tunggu");
                 loading.setCancelable(false);
@@ -232,13 +216,13 @@ public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implemen
                 if (loading != null) {
                     loading.dismiss();
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(PermohonanTidakKeberatanTetangga.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PermohonanBelumMemilikiRumah.this);
                     builder.setTitle("Permohonan Berhasil");
                     builder.setIcon(R.drawable.ic_check_black_24dp);
                     builder.setMessage("Selamat ! Pengajuan Anda berhasil dilakukan. Silahkan cek Email untuk melihat nomer resi pelayanan");
                     builder.setPositiveButton("Oke", null);
                     final AlertDialog alert = builder.create();
-                    PermohonanTidakKeberatanTetangga.this.runOnUiThread(new java.lang.Runnable() {
+                    PermohonanBelumMemilikiRumah.this.runOnUiThread(new java.lang.Runnable() {
                         public void run() {
                             //show AlertDialog
                             alert.show();
@@ -248,6 +232,37 @@ public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implemen
             }
         };
         task.execute();
+    }
+
+    public String getPath(Uri uri){
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+
+        return path;
+    }
+
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
 
     @Override
@@ -267,123 +282,14 @@ public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implemen
         }
     }
 
-    private void requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-            return;
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            //If the user has denied the permission previously your code will come to this block
-            //Here you can explain why you need this permission
-            //Explain here why you need this permission
-        }
-        //And finally ask for the permission
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
-    }
-
-    private String getPath(Uri uri) {
-        Cursor cursor =  getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
-
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        cursor.close();
-
-        return path;
-    }
-
-
-    private void submitForm() {
-        if (!validateNik()) {
-            return;
-        }
-
-        if (!validateEmail()) {
-            return;
-        }
-
-        if (!validateKegiatan()) {
-            return;
-        }
-
-        cekNikdanPhoto();
-    }
-
-    private class MyTextWatcher implements TextWatcher {
-
-        private View view;
-
-        private MyTextWatcher(View view){
-            this.view = view;
-        }
-
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        public void afterTextChanged(Editable editable) {
-            switch (view.getId()) {
-                case R.id.editTextNik:
-                    validateNik();
-                    break;
-                case R.id.editTextEmail:
-                    validateEmail();
-                    break;
-                case R.id.editTextKegiatan:
-                    validateKegiatan();
-                    break;
-            }
-        }
-    }
-
-    private boolean validateNik() {
-        if (editTextNik.getText().toString().trim().isEmpty()) {
-            input_layout_nik.setError(getString(R.string.err_nik));
-            requestFocus(editTextNik);
-            return false;
-        } else {
-            input_layout_nik.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validateEmail(){
-       String email = editTextEmail.getText().toString().trim();
-        if(email.isEmpty() || !isValidEmail(email)){
-            input_layout_email.setError(getString(R.string.err_email));
-            requestFocus(editTextEmail);
-            return false;
-        } else {
-            input_layout_email.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validateKegiatan() {
-        if (editTextKegiatan.getText().toString().trim().isEmpty()) {
-            input_layout_kegiatan.setError(getString(R.string.err_kegiatan_tetangga));
-            requestFocus(editTextKegiatan);
-            return false;
-        } else {
-            input_layout_kegiatan.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private static boolean isValidEmail(String email) {
-        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
-    private void requestFocus(View view) {
-        if (view.requestFocus()) {
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    @Override
+    public void onClick(View v){
+        if(v == buttonSubmit){
+            submitForm();
+        } else if( v == ivGallery){
+            showFileChooser();
+        } else if( v == ivGallery2){
+            showFileChooser2();
         }
     }
 
@@ -427,15 +333,93 @@ public class PermohonanTidakKeberatanTetangga extends AppCompatActivity implemen
 
     }
 
-    @Override
-    public void onClick(View v){
-        if(v == buttonSubmit){
-            submitForm();
-        } else if( v == ivGallery){
-            showFileChooser();
-        } else if( v == ivGallery2){
-            showFileChooser2();
+    private class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view){
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.editTextNik:
+                    validateNik();
+                    break;
+                case R.id.editTextEmail:
+                    validateEmail();
+                    break;
+                case R.id.editTextKeperluan:
+                    validateKeperluan();
+                    break;
+            }
         }
     }
 
+    private void submitForm() {
+        if (!validateNik()) {
+            return;
+        }
+
+        if (!validateEmail()) {
+            return;
+        }
+
+        if(!validateKeperluan()){
+            return;
+        }
+
+        cekNikdanPhoto();
+    }
+
+    private boolean validateKeperluan() {
+        if (editTextKeperluan.getText().toString().trim().isEmpty()) {
+            input_layout_keperluan_belum_memiliki_rumah.setError(getString(R.string.err_keperluan_belum_menikah));
+            requestFocus(editTextKeperluan);
+            return false;
+        } else {
+            input_layout_keperluan_belum_memiliki_rumah.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateNik() {
+        if (editTextNik.getText().toString().trim().isEmpty()) {
+            input_layout_nik.setError(getString(R.string.err_nik));
+            requestFocus(editTextNik);
+            return false;
+        } else {
+            input_layout_nik.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateEmail(){
+        String email = editTextEmail.getText().toString().trim();
+        if(email.isEmpty() || !isValidEmail(email)){
+            input_layout_email.setError(getString(R.string.err_email));
+            requestFocus(editTextEmail);
+            return false;
+        } else {
+            input_layout_email.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
 }

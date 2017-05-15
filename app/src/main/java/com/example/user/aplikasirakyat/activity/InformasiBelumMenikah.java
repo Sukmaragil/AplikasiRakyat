@@ -1,9 +1,11 @@
-package com.example.user.aplikasirakyat;
+package com.example.user.aplikasirakyat.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
+
+import com.example.user.aplikasirakyat.R;
 
 /**
  * Created by USER on 16/06/2016.

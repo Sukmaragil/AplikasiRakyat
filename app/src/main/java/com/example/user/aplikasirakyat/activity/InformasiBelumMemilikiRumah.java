@@ -1,14 +1,16 @@
-package com.example.user.aplikasirakyat;
+package com.example.user.aplikasirakyat.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 
+import com.example.user.aplikasirakyat.R;
+
 /**
  * Created by USER on 16/06/2016.
  */
-public class InformasiPenghasilanTidakTetap  extends AppCompatActivity {
+public class InformasiBelumMemilikiRumah  extends AppCompatActivity {
 
     WebView webView;
 
@@ -23,13 +25,13 @@ public class InformasiPenghasilanTidakTetap  extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String summary = "<html>" +
-                "<head><center><h4><bold>Informasi Pengajuan Permohonan Surat Keterangan Penghasilan Tidak Tetap</bold></h4></center></head>" +
+                "<head><center><h4><bold>Informasi Pengajuan Permohonan Surat Keterangan Belum Memiliki Rumah</bold></h4></center></head>" +
                 "<body>" +
 
-                "<p>Berikut ini adalah langkah - langkah pengajuan permohonan Surat Keterangan Penghasilan Tidak Tetap </p>" +
+                "<p>Berikut ini adalah langkah - langkah pengajuan permohonan Surat Keterangan Belum Memiliki Rumah </p>" +
                 "<ol>" +
                 "<li>Klik tombol navigasi pada pojok kiri atas halaman <strong>'Beranda'</strong>.</li>" +
-                "<li>Pada bagian 'Ajukan Permohonan', klik pilihan <strong>'Penghasilan Tidak Tetap'</strong>.</li> " +
+                "<li>Pada bagian 'Ajukan Permohonan', klik pilihan <strong>'Belum Memiliki Rumah'</strong>.</li> " +
                 "<li>Isi Nomor Induk Kependudukan sesuai identitas Anda.</li>" +
                 "<li>Isi Alamat Email Anda yang aktif. Hal ini diperlukan untuk mengirimkan nomer resi pelayanan Anda.</li>" +
                 "<li>Upload Identitas Anda, KTP (Kartu Tanda Penduduk) dan KK (Kartu Keluarga).</li>" +

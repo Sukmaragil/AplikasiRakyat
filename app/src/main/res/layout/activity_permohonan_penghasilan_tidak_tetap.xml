@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".PermohonanPenghasilanTidakTetap"
+    tools:context=".activity.PermohonanPenghasilanTidakTetap"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.design.widget.AppBarLayout
@@ -36,7 +36,7 @@
             android:paddingRight="20dp"
             android:paddingTop="20dp"
             android:paddingLeft="20dp"
-            tools:context=".PermohonanBelumMenikah"
+            tools:context=".activity.PermohonanBelumMenikah"
             xmlns:tools="http://schemas.android.com/tools">
 
             <android.support.design.widget.TextInputLayout
