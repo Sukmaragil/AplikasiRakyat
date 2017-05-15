@@ -1,4 +1,4 @@
-package com.example.user.aplikasirakyat;
+package com.example.user.aplikasirakyat.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.user.aplikasirakyat.activity.MainActivity;
+import com.example.user.aplikasirakyat.PrefManager;
+import com.example.user.aplikasirakyat.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
