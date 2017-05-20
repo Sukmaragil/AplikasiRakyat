@@ -5,31 +5,11 @@
     <group android:checkableBehavior="single">
         <menu>
             <item
-                android:id="@+id/belum_memiliki_rumah"
-                android:icon="@drawable/ic_house_24"
-                android:textSize="@dimen/font_navigasi"
-                android:title="@string/belum_memiliki_rumah" />
-            <item
-            android:id="@+id/belum_menikah"
-            android:icon="@drawable/ic_person_black"
-                android:textSize="@dimen/font_navigasi"
-            android:title="@string/belum_menikah" />
-            <item
-                android:id="@+id/izin_berpergian"
-                android:textSize="@dimen/font_navigasi"
-                android:icon="@drawable/ic_card_travel_black_24px"
-                android:title="@string/izin_berpergian" />
-            <item
-                android:id="@+id/penghasilan_tidak_tetap"
-                android:icon="@drawable/ic_attach_money"
-                android:textSize="@dimen/font_navigasi"
-                android:title="@string/penghasilan_tidak_tetap" />
-            <item
-                android:id="@+id/tidak_keberatan_tetangga"
-                android:icon="@drawable/ic_people_black"
-                android:textSize="@dimen/font_navigasi"
-                android:title="@string/tidak_keberatan_tetangga" />
-
+                android:id="@+id/info_belum_memiliki_rumah"
+                android:src="@drawable/ic_create_black"
+                android:textSize="12sp"
+                android:title="Buat Surat"
+                />
         </menu>
 
     </group>
@@ -42,23 +22,6 @@
                     android:id="@+id/info_belum_memiliki_rumah"
                     android:icon="@drawable/ic_info_24"
                     android:title="@string/belum_memiliki_rumah" />
-                <item
-                    android:id="@+id/info_belum_menikah
-                    "
-                    android:icon="@drawable/ic_info_24"
-                    android:title="@string/belum_menikah" />
-                <item
-                    android:id="@+id/info_izin_berpergian"
-                    android:icon="@drawable/ic_info_24"
-                    android:title="@string/izin_berpergian" />
-                <item
-                    android:id="@+id/info_penghasilan_tidak_tetap"
-                    android:icon="@drawable/ic_info_24"
-                    android:title="@string/penghasilan_tidak_tetap" />
-                <item
-                    android:id="@+id/info_tidak_keberatan_tetangga"
-                    android:icon="@drawable/ic_info_24"
-                    android:title="@string/tidak_keberatan_tetangga" />
 
             </menu>
 

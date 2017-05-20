@@ -156,49 +156,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.belum_menikah) {
+        if (id == R.id.info_belum_memiliki_rumah) {
             // Handle the camera action
             Intent intent = new Intent(MainActivity.this,PermohonanBelumMenikah.class);
-            startActivity(intent);
-        } else if (id == R.id.penghasilan_tidak_tetap) {
-            Intent intent = new Intent(MainActivity.this,PermohonanPenghasilanTidakTetap.class);
-            startActivity(intent);
-
-        } else if (id == R.id.belum_memiliki_rumah) {
-            Intent intent = new Intent(MainActivity.this,PermohonanBelumMemilikiRumah.class);
-            startActivity(intent);
-
-        } else if (id == R.id.tidak_keberatan_tetangga) {
-            Intent intent = new Intent(MainActivity.this,PermohonanTidakKeberatanTetangga.class);
-            startActivity(intent);
-
-        } else if (id == R.id.izin_berpergian) {
-            Intent intent = new Intent(MainActivity.this,PermohonanIzinBerpergian.class);
             startActivity(intent);
 
         }
         else if (id == R.id.info_belum_memiliki_rumah) {
             Intent intent = new Intent(MainActivity.this,InformasiBelumMemilikiRumah.class);
-            startActivity(intent);
-
-        }
-        else if (id == R.id.info_belum_menikah) {
-            Intent intent = new Intent(MainActivity.this,InformasiBelumMenikah.class);
-            startActivity(intent);
-
-        }
-        else if (id == R.id.info_izin_berpergian) {
-            Intent intent = new Intent(MainActivity.this,InformasiIzinBerpergian.class);
-            startActivity(intent);
-
-        }
-        else if (id == R.id.info_penghasilan_tidak_tetap) {
-            Intent intent = new Intent(MainActivity.this,InformasiPenghasilanTidakTetap.class);
-            startActivity(intent);
-
-        }
-        else if (id == R.id.info_tidak_keberatan_tetangga) {
-            Intent intent = new Intent(MainActivity.this,InformasiTidakKeberatanTetangga.class);
             startActivity(intent);
 
         }

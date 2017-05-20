@@ -57,4 +57,17 @@
 
     <!--font awesome-->
     <string name="font_awesome_write_icon">&#xf040;</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="register_button">Register</string>
+
+    <!-- Strings related to login -->
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Fullname</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="btn_link_to_register">Not a member? Sign up now.</string>
+    <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="name">Fullname</string>
 </resources>

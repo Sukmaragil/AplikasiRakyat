@@ -1,4 +1,4 @@
-package com.example.user.aplikasirakyat;
+package com.example.user.aplikasirakyat.app;
 
 import android.app.Application;
 import android.text.TextUtils;
@@ -7,8 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-
-import java.util.Objects;
+import com.example.user.aplikasirakyat.utils.LruBitmapCache;
 
 /**
  * Created by USER on 11/05/2016.

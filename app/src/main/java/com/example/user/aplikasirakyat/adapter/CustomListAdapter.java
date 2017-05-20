@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.example.user.aplikasirakyat.AppController;
+import com.example.user.aplikasirakyat.app.AppController;
 import com.example.user.aplikasirakyat.R;
 import com.example.user.aplikasirakyat.activity.ListAllPermohonanRT;
 
