@@ -1,6 +1,8 @@
 package com.example.user.aplikasirakyat.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,19 +18,36 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.example.user.aplikasirakyat.DataFish;
 import com.example.user.aplikasirakyat.DividerItemDecoration;
 import com.example.user.aplikasirakyat.Movie;
 import com.example.user.aplikasirakyat.R;
 import com.example.user.aplikasirakyat.RecyclerTouchListener;
+import com.example.user.aplikasirakyat.adapter.AdapterFish;
 import com.example.user.aplikasirakyat.adapter.MoviesAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int CONNECTION_TIMEOUT = 10000;
+    public static final int READ_TIMEOUT = 15000;
+
     private List<Movie> movieList = new ArrayList<>();
     private RecyclerView recyclerView;
+    private AdapterFish sAdapter;
     private MoviesAdapter mAdapter;
 
     WebView webview;
@@ -41,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        new Asyncfetch().execute();
         // webview.loadData(summary, "text/html", "UTF-8");
         // webview.loadUrl("http:www.google.com/");
         // navigation drawer
@@ -79,13 +99,117 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    //load data from database
+    private class Asyncfetch extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            //method will be running on UI thread
+            progressDialog.setMessage("\tLoading...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                url = new URL("sukmaragil.xyz/fishData.json");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return e.toString();
+            }
+            try {
+                //setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(100000);
+                conn.setRequestMethod("POST");
+                // setDoOutput to true as we receive data from json file
+                conn.setDoOutput(true);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+                return e1.toString();
+            }
+
+            try {
+                int response_code = conn.getResponseCode();
+                //check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+                    //read data from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    //pass data to onPostExecute method
+                    return (result.toString());
+                } else {
+                    return ("Unsuccessful");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.toString();
+            } finally {
+                conn.disconnect();
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //this method will be running on UI thread
+            progressDialog.dismiss();
+            List<DataFish> data = new ArrayList<>();
+
+            progressDialog.dismiss();
+            try {
+                JSONArray jsonArray = new JSONArray(result);
+                // extract data from json and store into Arraylist as class object
+
+                for (int i=0; i<jsonArray.length(); i++) {
+                    JSONObject json_data = jsonArray.getJSONObject(i);
+                    DataFish fishData = new DataFish();
+                    fishData.fishImage = json_data.getString("fish_img");
+                    fishData.fishName = json_data.getString("fish_name");
+                    fishData.catName = json_data.getString("cat_name");
+                    fishData.sizeName = json_data.getString("size_name");
+                    fishData.price = json_data.getInt("price");
+                    data.add(fishData);
+                }
+                // setup and handover data to recyclerview
+                recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+                sAdapter = new AdapterFish(MainActivity.this, data);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(mLayoutManager);
+                //recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(mAdapter);
+
+
+            } catch (JSONException e) {
+                Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+    }
+
     public interface ClickListener {
         void onClick(View view, int position);
 
         void onLongClick(View view, int position);
     }
 
-
+    // dummy data to show recycler list view
     private void prepareMovieData() {
         Movie movie = new Movie("Mad Max: Fury Road", "Action & Adventure", "2015");
         movieList.add(movie);
@@ -138,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAdapter.notifyDataSetChanged();
     }
 
-
+    // back pressed navigation button
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -156,16 +280,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.info_belum_memiliki_rumah) {
+        if (id == R.id.create) {
             // Handle the camera action
-            Intent intent = new Intent(MainActivity.this,PermohonanBelumMenikah.class);
+            Intent intent = new Intent(MainActivity.this,PermohonanActivity.class);
             startActivity(intent);
 
         }
-        else if (id == R.id.info_belum_memiliki_rumah) {
-            Intent intent = new Intent(MainActivity.this,InformasiBelumMemilikiRumah.class);
+        else if (id == R.id.kirimSaran) {
+            Intent intent = new Intent(MainActivity.this,SaranActivity.class);
             startActivity(intent);
-
+        }
+        else if (id == R.id.Bantuan) {
+            Intent intent = new Intent(MainActivity.this,BantuanActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.TeleponDarurat) {
+            Intent intent = new Intent(MainActivity.this,TeleponDaruratActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.Logout) {
+            Toast.makeText(this, "Successfully Logout", Toast.LENGTH_SHORT).show();
         }
 
 

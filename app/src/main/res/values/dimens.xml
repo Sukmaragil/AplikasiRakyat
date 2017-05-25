@@ -9,10 +9,11 @@
     <dimen name="namaDepan">17dp</dimen>
     <dimen name="nik">15dip</dimen>
     <dimen name="jenisPelayanan">13dip</dimen>
-    <dimen name="font_judul">16sp</dimen>
+    <dimen name="font_title">16sp</dimen>
     <dimen name="font_navigasi">12sp</dimen>
     <dimen name="font_isi">14sp</dimen>
-    <dimen name="font_title">14sp</dimen>
+    <dimen name="formTitle">18sp</dimen>
+
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="dots_height">30sp</dimen>

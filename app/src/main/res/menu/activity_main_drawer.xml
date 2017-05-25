@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Ajukan Surat Keterangan">
-    <group android:checkableBehavior="single">
-        <menu>
-            <item
-                android:id="@+id/info_belum_memiliki_rumah"
-                android:src="@drawable/ic_create_black"
-                android:textSize="12sp"
-                android:title="Buat Surat"
-                />
-        </menu>
+    <item
+        android:id="@+id/create"
+        android:src="@drawable/ic_create_black"
+        android:textSize="12sp"
+        android:title="@string/create"
+        />
+    <item
+        android:id="@+id/kirimSaran"
+        android:icon="@drawable/ic_mail_black"
+        android:title="Kirim Saran"
+        android:maxLines="1"/>
+    <item
+        android:id="@+id/Bantuan"
+        android:icon="@drawable/ic_help_black"
+        android:title="Bantuan"
+        />
+    <item
+        android:id="@+id/TeleponDarurat"
+        android:icon="@drawable/ic_call_black"
+        android:title="Telepon Darurat"
+        />
+    <item
+        android:id="@+id/Logout"
+        android:icon="@drawable/ic_info_24"
+        android:title="Logout"
+        />
 
-    </group>
-    </item>
-
-    <item android:title="Informasi pelayanan">
-        <group android:checkableBehavior="single">
-            <menu>
-                <item
-                    android:id="@+id/info_belum_memiliki_rumah"
-                    android:icon="@drawable/ic_info_24"
-                    android:title="@string/belum_memiliki_rumah" />
-
-            </menu>
-
-        </group>
-    </item>
 
 </menu>
