@@ -9,21 +9,42 @@
     <string name="hint_terms">Saya menyetujui ketentuan yang berlaku</string>
     <string name="submitButton">Ajukan Permohonan</string>
 
+    <string-array name="jenis_surat">
+        <item>Belum memiliki rumah</item>
+        <item>Belum menikah</item>
+        <item>Izin bepergian</item>
+        <item>Penghasilan tidak tetap</item>
+        <item>Tidak keberatan bertetangga</item>
+    </string-array>
+
+    <string name="surat_prompt">Pilih jenis surat</string>
+
+    <!-- view surat -->
+    <string name="dot">:  </string>
+    <string name="download">Download Surat</string>
+    <string name="disabled_download">Surat belum tersedia</string>
+    <string name="nama">Nama </string>
+    <string name="nomor">Nomor </string>
+    <string name="keperluan">Keperluan </string>
+
     <!--navigation item name-->
+    <string name="nav_home">Beranda</string>
     <string name="nav_create">Buat Surat</string>
     <string name="nav_saran">Kirim Saran</string>
     <string name="nav_bantuan">Bantuan</string>
     <string name="nav_teleponDarurat">Telepon Darurat</string>
     <string name="nav_logout">Keluar</string>
+    <string name="profile">Pengaturan profil</string>
 
     <!--navigation title bar-->
     <string name="ajukan_permohonan">Ajukan Permohonan</string>
     <string name="bantuan">Bantuan</string>
     <string name="telepon_darurat">Telepon Darurat</string>
+    <string name="surat">Surat</string>
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
-        <item>Home</item>
+        <item>Beranda</item>
         <item>Buat Surat</item>
         <item>Movies</item>
         <item>Notifications</item>
@@ -32,9 +53,10 @@
 
     <!--Form saran-->
     <string name="judul">Judul</string>
-    <string name="tujuan">Ke :</string>
+    <string name="tujuan">Kepada</string>
     <string name="pemerintah">Pemerintah</string>
     <string name="pengembang">Pengembang</string>
+    <string name="btnSaran">Kirim Saran</string>
 
     <!--hint list-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -71,10 +93,10 @@
     <string name="lacak">Lacak Permohonan</string>
 
     <!--intor slider strings-->
-    <string name="title_activity_welcome">Home Screen</string>
+    <string name="title_activity_welcome">Beranda</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
-    <string name="start">GOT IT</string>
+    <string name="start">MULAI</string>
 
     <string name="slide_1_title">Selamat Datang!</string>
     <string name="slide_1_desc">Cara mudah mengurus perizinan dan surat menyurat!</string>
@@ -99,14 +121,18 @@
     <!-- Strings related to login -->
     <string name="hint_password">Password</string>
     <string name="hint_name">Fullname</string>
-    <string name="btn_login">LOGIN</string>
-    <string name="btn_register">REGISTER</string>
-    <string name="btn_link_to_register">Not a member? Sign up now.</string>
-    <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="btn_login">MASUK</string>
+    <string name="btn_register">DAFTAR</string>
+    <string name="btn_NIK">Nomor KTP</string>
+    <string name="btn_upload_KTP">upload KTP</string>
+    <string name="btn_upload_KK">upload KK</string>
+    <string name="btn_link_to_register">Belum terdaftar? Daftar sekarang.</string>
+    <string name="btn_link_to_login">Saya sudah terdaftar! Masuk.</string>
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
-    <string name="name">Fullname</string>
+    <string name="name">Nama Lengkap</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_profil">Profil</string>
 </resources>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- suppress ALL -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.user.aplikasirakyat">
 
@@ -73,9 +73,23 @@
                 android:value=".activity.MainActivity" />
         </activity>
         <activity
+            android:name=".activity.ViewSuratActivity"
+            android:label="@string/surat">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
+        </activity>
+        <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.ProfilActivity"
+            android:label="@string/title_activity_profil">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
         </activity>
     </application>
 

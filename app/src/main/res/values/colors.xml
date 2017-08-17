@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--app color-->
+    <color name="background">#ffffff</color>
+    <!---->
     <color name="jenisPelayanan">#666666</color>
 
     <color name="list_divider">#d9d9d9</color>
@@ -8,9 +11,11 @@
     <color name="list_row_hover_start_color">#ebeef0</color>
     <color name="list_row_hover_end_color">#ebeef0</color>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#3395ff</color>
+    <color name="colorPrimaryDark">#2278d4</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="black">#000</color>
 
 <!--asset for intro slider (getting started)-->
     <!-- Screens background color-->
@@ -47,6 +52,7 @@
     <!--for list view text color-->
     <color name="year">#999999</color>
     <color name="title">#222222</color>
+
     <!--for login xml-->
     <color name="lupa_pass">#2e456b</color>
     <color name="bg_login">#2278d4</color>
@@ -62,4 +68,7 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
+
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
 </resources>

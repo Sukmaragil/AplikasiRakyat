@@ -15,6 +15,8 @@ public class Config {
     public static final String URL_LACAK_PERMOHONAN = "http://ilhamauliafahmy.com/skripsiAndroid/lacakpermohonan.php?id=";
 
     public static final String URL_CEK_NIK = "http://ilhamauliafahmy.com/skripsiAndroid/cekNik.php";
+
+    public static final String SHARED_PREF_NAME = "egovernment";
     //Keys that will be used to send the request to php scripts
 
     public static final String KEY_PERMOHONAN_ID = "id";

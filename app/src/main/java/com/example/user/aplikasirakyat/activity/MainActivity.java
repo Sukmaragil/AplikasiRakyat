@@ -1,29 +1,38 @@
 package com.example.user.aplikasirakyat.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.example.user.aplikasirakyat.Config;
 import com.example.user.aplikasirakyat.DataFish;
-import com.example.user.aplikasirakyat.DividerItemDecoration;
 import com.example.user.aplikasirakyat.Movie;
 import com.example.user.aplikasirakyat.R;
 import com.example.user.aplikasirakyat.RecyclerTouchListener;
 import com.example.user.aplikasirakyat.adapter.AdapterFish;
+import com.example.user.aplikasirakyat.adapter.CustomPagerAdapter;
 import com.example.user.aplikasirakyat.adapter.MoviesAdapter;
 
 import org.json.JSONArray;
@@ -45,10 +54,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
 
+    private boolean LoggedIn = false;
+
     private List<Movie> movieList = new ArrayList<>();
     private RecyclerView recyclerView;
     private AdapterFish sAdapter;
     private MoviesAdapter mAdapter;
+    private FloatingActionButton btnCreate;
+    ViewPager viewPager;
+    int images[] = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3};
+    CustomPagerAdapter myCustomPagerAdapter;
 
     WebView webview;
 
@@ -59,8 +74,63 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         webview = (WebView) findViewById(R.id.webView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        viewPager = (ViewPager)findViewById(R.id.viewPager);
+        btnCreate = (FloatingActionButton) findViewById(R.id.fabReport);
+        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        new Asyncfetch().execute();
+//        check logged in or not for show in apps
+//        if(!loggedIn) {
+//            View v = getLayoutInflater().inflate(R.layout.start, null);
+//        } else {
+//            new Asyncfetch().execute();
+//            // webview.loadData(summary, "text/html", "UTF-8");
+//            // webview.loadUrl("http:www.google.com/");
+//            // navigation drawer
+//            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//            drawer.addDrawerListener(toggle);
+//            toggle.syncState();
+//
+//            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//            navigationView.setNavigationItemSelectedListener(this);
+//
+//            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+//
+//            mAdapter = new MoviesAdapter(movieList);
+//            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+//            recyclerView.setLayoutManager(mLayoutManager);
+//            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+//            recyclerView.setItemAnimator(new DefaultItemAnimator());
+//            recyclerView.setAdapter(mAdapter);
+//
+//            recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
+//                @Override
+//                public void onClick(View view, int position) {
+//                          Movie movie = movieList.get(position);
+//                          Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+//                          Intent i = new Intent(getApplicationContext(),
+//                              ViewSuratActivity.class);
+//                          i.putExtra("status", movieList.get(position).getStatus());
+//                          i.putExtra("progress", movieList.get(position).getProgress());
+//                          i.putExtra("nomor", movieList.get(position).getNumb());
+//                          i.putExtra("name", movieList.get(position).getName());
+//                          i.putExtra("keterangan", movieList.get(position).getKeterangan());
+//                          i.putExtra("jenis_surat", movieList.get(position).getTitle());
+//                          startActivity(i);
+//                }
+//
+//                @Override
+//                public void onLongClick(View view, int position) {
+//
+//                }
+//            }));
+//
+//            prepareMovieData();
+//            // action button click listener
+//        }
+
+//        new Asyncfetch().execute();
         // webview.loadData(summary, "text/html", "UTF-8");
         // webview.loadUrl("http:www.google.com/");
         // navigation drawer
@@ -73,12 +143,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        myCustomPagerAdapter = new CustomPagerAdapter(MainActivity.this, images);
+        viewPager.setAdapter(myCustomPagerAdapter);
+
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mAdapter = new MoviesAdapter(movieList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        movieList = new ArrayList<>();
+        mAdapter = new MoviesAdapter(this, movieList);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
@@ -86,7 +162,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view, int position) {
                 Movie movie = movieList.get(position);
-                Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(),
+                        ViewSuratActivity.class);
+                i.putExtra("status", movieList.get(position).getStatus());
+                i.putExtra("progress", movieList.get(position).getProgress());
+                i.putExtra("nomor", movieList.get(position).getNumb());
+                i.putExtra("name", movieList.get(position).getName());
+                i.putExtra("keterangan", movieList.get(position).getKeterangan());
+                i.putExtra("jenis_surat", movieList.get(position).getTitle());
+                startActivity(i);
             }
 
             @Override
@@ -96,8 +181,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }));
 
         prepareMovieData();
-
+        // action button click listener
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),
+                        PermohonanActivity.class);
+                startActivity(i);
+            }
+        });
     }
+
+
 
     //load data from database
     private class Asyncfetch extends AsyncTask<String, String, String> {
@@ -211,52 +305,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // dummy data to show recycler list view
     private void prepareMovieData() {
-        Movie movie = new Movie("Mad Max: Fury Road", "Action & Adventure", "2015");
+        Movie movie = new Movie("Surat belum menikah", "Luthfi", "19284098", "selesai", "Saya mau menikah", 1);
         movieList.add(movie);
 
-        movie = new Movie("Inside Out", "Animation, Kids & Family", "2015");
+        movie = new Movie("Surat belum memiliki rumah", "Luthfi", "18294722", "selesai", "Saya mau beli rumah kredit rakyat", 1);
         movieList.add(movie);
 
-        movie = new Movie("Star Wars: Episode VII - The Force Awakens", "Action", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("Shaun the Sheep", "Animation", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("The Martian", "Science Fiction & Fantasy", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("Mission: Impossible Rogue Nation", "Action", "2015");
-        movieList.add(movie);
-
-        movie = new Movie("Up", "Animation", "2009");
-        movieList.add(movie);
-
-        movie = new Movie("Star Trek", "Science Fiction", "2009");
-        movieList.add(movie);
-
-        movie = new Movie("The LEGO Movie", "Animation", "2014");
-        movieList.add(movie);
-
-        movie = new Movie("Iron Man", "Action & Adventure", "2008");
-        movieList.add(movie);
-
-        movie = new Movie("Aliens", "Science Fiction", "1986");
-        movieList.add(movie);
-
-        movie = new Movie("Chicken Run", "Animation", "2000");
-        movieList.add(movie);
-
-        movie = new Movie("Back to the Future", "Science Fiction", "1985");
-        movieList.add(movie);
-
-        movie = new Movie("Raiders of the Lost Ark", "Action & Adventure", "1981");
-        movieList.add(movie);
-
-        movie = new Movie("Goldfinger", "Action & Adventure", "1965");
-        movieList.add(movie);
-
-        movie = new Movie("Guardians of the Galaxy", "Science Fiction & Fantasy", "2014");
+        movie = new Movie("Surat izin bepergian", "Luthfi", "17284521", "proses", "Saya ingin backpacker ke beberapa provinsi di Indonesia", 0);
         movieList.add(movie);
 
         mAdapter.notifyDataSetChanged();
@@ -281,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.create) {
-            // Handle the camera action
             Intent intent = new Intent(MainActivity.this,PermohonanActivity.class);
             startActivity(intent);
 
@@ -294,18 +348,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this,BantuanActivity.class);
             startActivity(intent);
         }
-        else if (id == R.id.TeleponDarurat) {
-            Intent intent = new Intent(MainActivity.this,TeleponDaruratActivity.class);
+        else if (id == R.id.Profile) {
+            Intent intent = new Intent(MainActivity.this, ProfilActivity.class);
             startActivity(intent);
         }
         else if (id == R.id.Logout) {
             Toast.makeText(this, "Successfully Logout", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int position = parent.getChildAdapterPosition(view); // item position
+            int column = position % spanCount; // item column
+
+            if (includeEdge) {
+                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+
+                if (position < spanCount) { // top edge
+                    outRect.top = spacing;
+                }
+                outRect.bottom = spacing; // item bottom
+            } else {
+                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
+                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing; // item top
+                }
+            }
+        }
+    }
+
+    /**
+     * Converting dp to pixel
+     */
+    private int dpToPx(int dp) {
+        Resources r = getResources();
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
 }

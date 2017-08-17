@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/background">
 
-    <item
-        android:id="@+id/create"
-        android:src="@drawable/ic_create_black"
-        android:textSize="12sp"
-        android:title="@string/create"
-        />
-    <item
-        android:id="@+id/kirimSaran"
-        android:icon="@drawable/ic_mail_black"
-        android:title="Kirim Saran"
-        android:maxLines="1"/>
-    <item
-        android:id="@+id/Bantuan"
-        android:icon="@drawable/ic_help_black"
-        android:title="Bantuan"
-        />
-    <item
-        android:id="@+id/TeleponDarurat"
-        android:icon="@drawable/ic_call_black"
-        android:title="Telepon Darurat"
-        />
-    <item
-        android:id="@+id/Logout"
-        android:icon="@drawable/ic_info_24"
-        android:title="Logout"
-        />
+    <group android:id="@+id/group_activity">
+        <item
+            android:id="@+id/beranda"
+            android:src="@drawable/ic_home_black_48dp"
+            android:textSize="12sp"
+            android:title="@string/nav_home" />
+        <item
+            android:id="@+id/create"
+            android:src="@drawable/ic_create_black_48dp"
+            android:textSize="12sp"
+            android:title="@string/nav_create" />
+        <item
+            android:id="@+id/kirimSaran"
+            android:icon="@drawable/ic_mail_black"
+            android:title="@string/nav_saran" />
+        <item
+            android:id="@+id/Bantuan"
+            android:icon="@drawable/ic_help_black"
+            android:title="@string/nav_bantuan" />
+        <!--<item-->
+            <!--android:id="@+id/TeleponDarurat"-->
+            <!--android:icon="@drawable/ic_call_black"-->
+            <!--android:title="@string/nav_teleponDarurat"-->
+            <!--/>-->
+    </group>
 
+    <group android:id="@+id/group_fragments">
+        <item
+            android:id="@+id/Profile"
+            android:icon="@drawable/ic_account_circle_black"
+            android:title="Pengaturan profil"
+            />
+        <item
+            android:id="@+id/Logout"
+            android:icon="@drawable/ic_power_settings"
+            android:title="@string/nav_logout"
+            />
+    </group>
 
 </menu>

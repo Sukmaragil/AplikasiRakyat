@@ -2,6 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:background="@drawable/list_row_selector"
     android:padding="8dp" >
 
@@ -10,16 +13,16 @@
         android:id="@+id/thumbnail"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp" />
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="8dp" />
 
-    <!-- Movie Title -->
+    <!--Title -->
     <TextView
         android:id="@+id/namaDepan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
         android:textSize="@dimen/namaDepan"
         android:textStyle="bold" />
 
@@ -30,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/namaDepan"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
         android:textSize="@dimen/nik" />
 
     <!-- Genre -->
@@ -40,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/nik"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toEndOf="@+id/thumbnail"
         android:textColor="@color/jenisPelayanan"
         android:textSize="@dimen/jenisPelayanan" />
 
